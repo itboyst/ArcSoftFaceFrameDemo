@@ -25,6 +25,13 @@ public class MainApplication {
 
     public static void main(String[] args) {
 
+         String libPath = "D:\\arcsoft_lib";
+         String appId = "";
+         String sdkKey = "";
+         String videoPath="E:\\FFOutput\\06.mp4";
+         String imagePath="D:\\demoJpg";
+
+
         Loader.load(opencv_imgproc.class);
         Loader.load(CvPoint.class);
         Loader.load(CvFont.class);
@@ -33,12 +40,12 @@ public class MainApplication {
 
         canvas.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        VideoPlayer videoPlayer = new VideoPlayer("E:\\FFOutput\\06.mp4");
+        VideoPlayer videoPlayer = new VideoPlayer(videoPath);
 
         FaceRecognize faceRecognize = new FaceRecognize();
-        faceRecognize.initEngine();
+        faceRecognize.initEngine(libPath,appId,sdkKey);
 
-        faceRecognize.registerFace("D:\\demoJpg");
+        faceRecognize.registerFace(imagePath);
         OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
 
         videoPlayer.setListener(new VideoListener() {

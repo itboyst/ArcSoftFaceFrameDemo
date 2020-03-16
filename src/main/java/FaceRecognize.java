@@ -39,9 +39,6 @@ public class FaceRecognize {
     private GenericObjectPool<FaceEngine> frEnginePool;
 
 
-    private String libPath = "D:\\arcsoft_lib\\ArcSoft_ArcFace_Java_Windows_x64_V3.0\\libs\\WIN64";
-    private String appId = "AYhALEGrnNXuLryuJuYpVimCr5K41eNh6TcXxTLAxk2C";
-    private String sdkKey = "2Jd77dqr7Ahi4GUK965KyG8ivxdAgdffenyaoipfR2RA";
 
 
     private volatile ConcurrentHashMap<Integer, FaceResult> faceResultRegistry = new ConcurrentHashMap<>();
@@ -54,7 +51,7 @@ public class FaceRecognize {
     /**
      * 初始化引擎
      */
-    public void initEngine() {
+    public void initEngine(String libPath,String appId,String sdkKey) {
 
         //引擎配置
         ftEngine = new FaceEngine(libPath);
