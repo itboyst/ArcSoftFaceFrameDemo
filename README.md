@@ -1,0 +1,2 @@
+# ArcSoftFaceFrameDemo
+基于虹软人脸识别SDK，使用Java带UI界面的人脸识别Demo
