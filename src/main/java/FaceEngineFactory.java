@@ -10,7 +10,6 @@ import org.apache.commons.pool2.impl.DefaultPooledObject;
  * @Author: st7251
  * @Date: 2018/10/16 13:47
  */
-
 @Data
 @Slf4j
 public class FaceEngineFactory extends BasePooledObjectFactory<FaceEngine> {

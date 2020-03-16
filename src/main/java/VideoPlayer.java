@@ -1,16 +1,9 @@
-import com.arcsoft.face.toolkit.ImageFactory;
-import com.arcsoft.face.toolkit.ImageInfo;
+
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.opencv_core.IplImage;
-
-
-import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import static org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_BGR24;
-import static org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_NV21;
-
 
 /**
  * @author st7251
