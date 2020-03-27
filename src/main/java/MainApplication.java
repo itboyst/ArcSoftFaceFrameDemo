@@ -25,11 +25,11 @@ public class MainApplication {
 
     public static void main(String[] args) {
 
-         String libPath = "D:\\arcsoft_lib";
+         String libPath = "D:\\arcsoft_lib";//虹软引擎库存放路径
          String appId = "";
          String sdkKey = "";
-         String videoPath="E:\\FFOutput\\06.mp4";
-         String imagePath="D:\\demoJpg";
+         String videoPath="E:\\FFOutput\\06.mp4";//视频文件路径
+         String imagePath="D:\\demoJpg";//需要识别人的注册照路径
 
 
         Loader.load(opencv_imgproc.class);
