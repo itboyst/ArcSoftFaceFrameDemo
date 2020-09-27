@@ -247,7 +247,7 @@ public class FaceRecognize {
                         }
 
                         log.info("相似度：" + score);
-                        if (score >= 0.3f) {
+                        if (score >= 0.8f) {
                             faceResult.setScore(score);
                             faceResult.setFlag(true);
                             faceResultRegistry.put(faceInfo.getFaceId(), faceResult);
