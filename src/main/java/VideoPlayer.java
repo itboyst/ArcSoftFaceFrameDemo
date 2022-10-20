@@ -1,6 +1,8 @@
 
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.opencv_core.IplImage;
+
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 import static org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_BGR24;
@@ -11,29 +13,51 @@ import static org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_BGR24;
  */
 public class VideoPlayer {
 
-    private FFmpegFrameGrabber fFmpegFrameGrabber;
+    private FrameGrabber frameGrabber;
 
     private VideoListener videoListener;
 
     private Timer timer = new Timer(true);
 
-    public VideoPlayer(String path) {
-        fFmpegFrameGrabber = new FFmpegFrameGrabber(path);
+    public VideoPlayer(File deviceFile) {
+        try {
+            frameGrabber = FFmpegFrameGrabber.createDefault(deviceFile);
+        } catch (FFmpegFrameGrabber.Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public VideoPlayer(String devicePath) {
+        try {
+            frameGrabber = FFmpegFrameGrabber.createDefault(devicePath);
+        } catch (FFmpegFrameGrabber.Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public VideoPlayer(int deviceNumber) {
+        try {
+            frameGrabber= VideoInputFrameGrabber.createDefault(deviceNumber);
+        } catch (FrameGrabber.Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setListener(VideoListener videoListener) {
         this.videoListener = videoListener;
     }
 
+
+
     public void start() {
         try {
-            fFmpegFrameGrabber.setPixelFormat(AV_PIX_FMT_BGR24 );
-            fFmpegFrameGrabber.start();
+            frameGrabber.setPixelFormat(AV_PIX_FMT_BGR24 );
+            frameGrabber.start();
             videoListener.onStart();
         } catch (FrameGrabber.Exception e) {
             videoListener.onError(e);
         }
-        final int[] lengthInVideoFrames = {fFmpegFrameGrabber.getLengthInVideoFrames()};
+//        final int[] lengthInVideoFrames = {frameGrabber.getLengthInVideoFrames()};
 
 //        Java2DFrameConverter converter = new Java2DFrameConverter();
         OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();//转换器
@@ -43,8 +67,8 @@ public class VideoPlayer {
             @Override
             public void run() {
                 try {
-                    Frame grab = fFmpegFrameGrabber.grabImage();
-                    lengthInVideoFrames[0]--;
+                    Frame grab = frameGrabber.grab();
+//                    lengthInVideoFrames[0]--;
                     if (grab != null) {
 //                        BufferedImage bufferedImage = converter.convert(grab);
 //                        videoListener.onPreview(bufferedImage);
@@ -53,9 +77,9 @@ public class VideoPlayer {
                             videoListener.onPreview(iplImage);
                         }
                     }
-                    if (lengthInVideoFrames[0] <= 0) {
-                        stop();
-                    }
+//                    if (lengthInVideoFrames[0] <= 0) {
+//                        stop();
+//                    }
                 } catch (Exception e) {
                     videoListener.onError(e);
                 }
@@ -69,7 +93,7 @@ public class VideoPlayer {
         timer.cancel();
 
         try {
-            fFmpegFrameGrabber.stop();
+            frameGrabber.stop();
             videoListener.onCancel();
         } catch (FrameGrabber.Exception e) {
             videoListener.onError(e);

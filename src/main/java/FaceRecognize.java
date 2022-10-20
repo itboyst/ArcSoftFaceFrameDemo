@@ -101,6 +101,9 @@ public class FaceRecognize {
         int count = 0;
         if (regEngine != null) {
             File file = new File(imagePath);
+            if(!file.exists()){
+                return;
+            }
             File[] files = file.listFiles();
 
             for (File file1 : files) {

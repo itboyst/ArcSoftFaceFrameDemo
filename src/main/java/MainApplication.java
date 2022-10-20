@@ -25,7 +25,7 @@ public class MainApplication {
 
     public static void main(String[] args) {
 
-         String libPath = "D:\\arcsoft_lib";//虹软引擎库存放路径
+         String libPath = System.getProperty("user.dir")+"\\libs\\WIN64";//虹软引擎库存放路径
          String appId = "";
          String sdkKey = "";
          String videoPath="E:\\FFOutput\\06.mp4";//视频文件路径
@@ -40,12 +40,14 @@ public class MainApplication {
 
         canvas.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        VideoPlayer videoPlayer = new VideoPlayer(videoPath);
+//                VideoPlayer videoPlayer = new VideoPlayer(videoPath);//视频文件
+        VideoPlayer videoPlayer = new VideoPlayer(0);//本地相机
 
         FaceRecognize faceRecognize = new FaceRecognize();
         faceRecognize.initEngine(libPath,appId,sdkKey);
 
-        faceRecognize.registerFace(imagePath);
+        faceRecognize.registerFace(imagePath);//注册人脸
+
         OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
 
         videoPlayer.setListener(new VideoListener() {
