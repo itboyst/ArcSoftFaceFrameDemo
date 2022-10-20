@@ -184,6 +184,7 @@ public class FaceRecognize {
                 }
 
             }
+            lastClearTime = System.currentTimeMillis();
         }
 
 
